@@ -7,19 +7,14 @@
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     i18n_domain="museudigital.conteudos">
 
-    <!-- Zope2 initialization -->
     <five:registerPackage package="." initialize=".initialize" />
 
-    <!-- Include configuration for dependencies listed in setup.py -->
     <includeDependencies package="." />
 
-    <!-- Include sub-packages that use their own configure.zcml files. -->
     <include package=".browser" />
 
-    <!-- Register all components defined with grok -->
     <grok:grok package="." />
 
-    <!-- Register the installation GenericSetup extension profile -->
     <genericsetup:registerProfile
         name="default"
         title="museudigital.conteudos"
@@ -27,5 +22,20 @@
         description="Extension profile for museudigital.conteudos."
         provides="Products.GenericSetup.interfaces.EXTENSION"
         />
+
+    <permission
+          id="museudigital.conteudos.AddAcervo"
+          title="museudigital.conteudos: Add Acervo"
+          />
+
+    <permission
+          id="museudigital.conteudos.AddCapitulo"
+          title="museudigital.conteudos: Add Capitulo"
+          />
+
+    <permission
+          id="museudigital.conteudos.AddLivro"
+          title="museudigital.conteudos: Add Livro"
+          />
 
 </configure>

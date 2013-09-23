@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<rolemap>
+    <permissions>
+        <permission name="museudigital.conteudos: Add Acervo" acquire="True">
+            <role name="Manager"/>
+            <role name="Site Administrator"/>
+            <role name="Owner"/>
+            <role name="Contributor"/>
+        </permission>
+        <permission name="museudigital.conteudos: Add Capitulo" acquire="True">
+            <role name="Manager"/>
+            <role name="Site Administrator"/>
+            <role name="Owner"/>
+            <role name="Contributor"/>
+        </permission>
+        <permission name="museudigital.conteudos: Add Livro" acquire="True">
+            <role name="Manager"/>
+            <role name="Site Administrator"/>
+            <role name="Owner"/>
+            <role name="Contributor"/>
+        </permission>
+    </permissions>
+</rolemap>

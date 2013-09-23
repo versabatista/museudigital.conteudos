@@ -1,26 +1,36 @@
 # -*- coding: utf-8 -*-
-"""Setup/installation tests for this package."""
 
-from museudigital.conteudos.testing import IntegrationTestCase
-from plone import api
+import unittest2 as unittest
+
+from Products.CMFCore.utils import getToolByName
+
+from museudigital.conteudos.config import PROJECTNAME
+from museudigital.conteudos.testing import INTEGRATION_TESTING
+from plone.app.testing import setRoles
+from plone.app.testing import TEST_USER_ID
 
 
-class TestInstall(IntegrationTestCase):
-    """Test installation of museudigital.conteudos into Plone."""
+class TestInstall(unittest.TestCase):
+    """Test installation of correios.site.conteudo into Plone."""
+
+    layer = INTEGRATION_TESTING
 
     def setUp(self):
         """Custom shared utility setup for tests."""
+        self.app = self.layer['app']
         self.portal = self.layer['portal']
-        self.installer = api.portal.get_tool('portal_quickinstaller')
+        self.qi = getToolByName(self.portal, 'portal_quickinstaller')
+        self.ttool = getToolByName(self.portal, 'portal_types')
 
-    def test_product_installed(self):
-        """Test if museudigital.conteudos is installed with portal_quickinstaller."""
-        self.assertTrue(self.installer.isProductInstalled('museudigital.conteudos'))
+    def test_installed(self):
+        self.assertTrue(self.qi.isProductInstalled(PROJECTNAME))
 
-    def test_uninstall(self):
-        """Test if museudigital.conteudos is cleanly uninstalled."""
-        self.installer.uninstallProducts(['museudigital.conteudos'])
-        self.assertFalse(self.installer.isProductInstalled('museudigital.conteudos'))
+    def test_installedAllTypes(self):
+        # test that all types are installed well
+        types = self.ttool.listContentTypes()
+        ids = ('Acervo', 'Capitulo', 'Livro')
+        for i in ids:
+            self.assertTrue(i in types)
 
     # browserlayer.xml
     def test_browserlayer(self):
@@ -28,3 +38,17 @@ class TestInstall(IntegrationTestCase):
         from museudigital.conteudos.interfaces import IMuseudigitalConteudosLayer
         from plone.browserlayer import utils
         self.failUnless(IMuseudigitalConteudosLayer in utils.registered_layers())
+
+
+class UninstallTestCase(unittest.TestCase):
+
+    layer = INTEGRATION_TESTING
+
+    def setUp(self):
+        self.portal = self.layer['portal']
+        self.qi = self.portal['portal_quickinstaller']
+        setRoles(self.portal, TEST_USER_ID, ['Manager'])
+        self.qi.uninstallProducts(products=[PROJECTNAME])
+
+    def test_uninstalled(self):
+        self.assertFalse(self.qi.isProductInstalled(PROJECTNAME))
