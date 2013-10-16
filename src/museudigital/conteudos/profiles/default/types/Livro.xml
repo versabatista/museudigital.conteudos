@@ -5,7 +5,7 @@
     <property name="title" i18n:translate="">Livro</property>
     <property name="description"
               i18n:translate=""></property>
-    <property name="content_icon">++resource++museudigital.conteudos/livro_icon.png</property>
+    <property name="content_icon">++resource++museudigital.conteudos/livro_icon.gif</property>
     <property name="content_meta_type">Livro</property>
     <property name="product">museudigital.conteudos</property>
     <property name="factory">addLivro</property>
